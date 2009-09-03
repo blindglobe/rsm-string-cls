@@ -13,6 +13,7 @@
 (in-package #:cl-user)
 
 (defpackage rsm.string
+  (:nicknames :rsm-string)
   (:use #:cl)
   (:documentation
    "This package provides string manipulation functions.
