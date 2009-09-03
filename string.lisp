@@ -12,9 +12,10 @@
 
 (in-package #:rsm.string)
 
-(eval-when (:compile-toplevel)
+#|
+ (eval-when (:compile-toplevel)
   (declaim (optimize (speed 3) (debug 0) (safety 1) (space 0))))
-
+|# 
 
 (declaim (inline string->number))
 
@@ -75,9 +76,13 @@ Example: (rsm.string:join '(\"abc\" \"def\" \"ghi\") :join-string \"_\")
                      (concatenate 'string s1 join-string s2)) str-list))))
 
 
-(declaim (ftype (function ((list string) (list string) 
-                                         &key (function t)) list)
+
+(declaim (ftype (function (; (list string) (list string)
+			   list list
+			   &key (:contain-meaning function))
+			  list)
                 contains))
+
 
 (defun contains (str-list elem-list &key (contain-meaning #'some))
   "Returns all strings in <str-list> that contain strings in <elem-list>; where
@@ -91,9 +96,11 @@ Example: (rsm.string:contains '(\"abc\" \"def\" \"ghi\") '(\"bc\" \"gh\"))
                       (search elem str)) elem-list)
       collect str))
 
-
-(declaim (ftype (function (list string &key (:unique t)) list)
+#|
+ (declaim (ftype (function (list string &key (:unique t))
+			  list)
                 does-not-contain))
+|#
 
 (defun does-not-contain (str-list str-elems &key (unique nil))
   "Return a list of strings from the string list, <str-list>, that do not
